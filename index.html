@@ -27,6 +27,7 @@
             background-color: var(--dark-bg);
             color: var(--text-light);
             line-height: 1.6;
+            transition: all 0.3s ease;
         }
 
         /* Premium Header */
@@ -36,9 +37,10 @@
             padding: 15px 20px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
         }
 
-        header h1 {
+        header h1, .theater-bottom-bar h1 {
             font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -46,8 +48,13 @@
             font-weight: 700;
         }
 
-        header h1 span {
+        header h1 span, .theater-bottom-bar h1 span {
             color: var(--primary-gold);
+        }
+
+        /* Normal Mode ਵਿੱਚ ਹੇਠਲੀ ਪੱਟੀ ਲੁਕੀ ਰਹੇਗੀ */
+        .theater-bottom-bar {
+            display: none;
         }
 
         .container {
@@ -67,7 +74,6 @@
             font-weight: 500;
             margin-bottom: 12px;
             color: #fff;
-            box-shadow: 0 2px 10px rgba(214, 175, 55, 0.05);
         }
 
         .scroll-hint-bar span {
@@ -75,26 +81,17 @@
             font-weight: 600;
         }
 
-        .bounce-arrow {
-            display: inline-block;
-            animation: bounce 0.8s infinite alternate;
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(4px); }
-        }
-
         /* 16:9 Responsive Iframe Container */
         .player-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%; 
             height: 0;
             background-color: #000;
             border: 2px solid var(--primary-gold);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
         }
 
         .player-wrapper iframe {
@@ -106,9 +103,27 @@
             border: none;
         }
 
-        /* Info Section */
+        /* Full Screen Button */
+        .btn-fullscreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #222 0%, #333 100%);
+            border: 2px solid var(--primary-gold);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(214, 175, 55, 0.1);
+        }
+
+        /* Match Info & Buttons */
         .match-info {
-            margin-top: 25px;
+            margin-top: 15px;
             background-color: var(--surface-bg);
             padding: 20px;
             border-radius: 8px;
@@ -120,12 +135,6 @@
             font-size: 1.2rem;
             color: var(--primary-gold);
             margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .match-info p {
-            color: var(--text-dim);
-            font-size: 0.9rem;
         }
 
         .live-badge {
@@ -137,12 +146,10 @@
             font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 10px;
-            animation: pulse 2s infinite;
         }
 
-        /* Action Buttons Section */
         .action-buttons {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .btn {
@@ -155,20 +162,13 @@
             color: #fff;
             font-weight: bold;
             font-size: 0.95rem;
-            transition: transform 0.2s;
-            text-align: center;
             width: 100%;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
         }
 
         .btn-whatsapp {
             background-color: var(--whatsapp-green);
         }
 
-        /* Permanent Features Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -184,67 +184,124 @@
             text-align: center;
         }
 
-        .feature-card .icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
         .feature-card h3 {
             font-size: 0.95rem;
             color: var(--primary-gold);
-            margin-bottom: 5px;
-            font-weight: 600;
         }
 
-        .feature-card p {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        /* Footer Section */
         footer {
             margin-top: 40px;
             background-color: #111;
             padding: 20px;
             text-align: center;
-            border-top: 1px solid #222;
             font-size: 0.8rem;
             color: var(--text-dim);
         }
 
-        footer p {
-            margin-bottom: 8px;
+        /* 👑 VIP THEATER MODE: ਜਦੋਂ ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ ਦਬਾਇਆ ਜਾਵੇਗਾ */
+        body.theater-mode {
+            overflow: hidden; 
         }
 
-        .disclaimer {
-            font-size: 0.75rem;
-            color: #666;
+        /* 1. ਉੱਪਰਲੀ ਪੱਟੀ ਫਿਕਸ */
+        body.theater-mode header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            padding: 10px 0;
+            z-index: 10000;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
+        body.theater-mode header h1 {
+            font-size: 1.2rem;
+        }
+
+        /* 2. ਥੱਲੇ ਵੀ ਬਿਲਕੁਲ ਸੇਮ ਸਾਈਜ਼ ਦੀ ਪੱਟੀ ਐਕਟਿਵ ਹੋਵੇਗੀ */
+        body.theater-mode .theater-bottom-bar {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(0deg, #222 0%, var(--dark-bg) 100%);
+            border-top: 2px solid var(--primary-gold);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 -4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        body.theater-mode .theater-bottom-bar h1 {
+            font-size: 1.2rem;
+        }
+
+        /* 3. ਵੀਡੀਓ ਪਲੇਅਰ ਚਾਰੇ ਪਾਸਿਆਂ ਤੋਂ ਸੁੰਦਰ ਫ੍ਰੇਮ ਵਿੱਚ ਬੰਦ ਹੋਵੇਗਾ */
+        body.theater-mode .player-wrapper {
+            position: fixed;
+            top: 50px;           /* ਉੱਪਰੋਂ 50px ਜਗ੍ਹਾ ਛੱਡੀ */
+            bottom: 50px;        /* ਥੱਲਿਓਂ 50px ਜਗ੍ਹਾ ਛੱਡੀ */
+            left: 12px;          /* ਖੱਬੇ ਪਾਸੇ ਪ੍ਰੀਮੀਅਮ ਗੈਪ */
+            right: 12px;         /* ਸੱਜੇ ਪਾਸੇ ਪ੍ਰੀਮੀਅਮ ਗੈਪ */
+            width: calc(100vw - 24px);
+            height: calc(100vh - 100px); 
+            z-index: 9999;
+            /* ਖੱਬੇ ਅਤੇ ਸੱਜੇ ਸੁੰਦਰ ਗੋਲਡ ਬਾਰਡਰ */
+            border-left: 3px solid var(--primary-gold);
+            border-right: 3px solid var(--primary-gold);
+            border-top: none;
+            border-bottom: none;
+            border-radius: 0;
+            padding-bottom: 0;
+        }
+
+        /* Exit Button ਸੈਟਿੰਗ */
+        body.theater-mode #fullscreenToggle {
+            position: fixed;
+            top: 10px;
+            right: 15px;
+            z-index: 10001;
+            width: auto;
+            margin: 0;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            background: #e50914; /* ਲਾਲ ਰੰਗ ਦਾ ਸਾਫ਼ ਬਟਨ */
+            border: 1px solid #fff;
+        }
+
+        /* ਫੁੱਲ ਸਕ੍ਰੀਨ ਵਿੱਚ ਬਾਕੀ ਸਭ ਕੁਝ ਹਾਈਡ */
+        body.theater-mode .scroll-hint-bar,
+        body.theater-mode .match-info,
+        body.theater-mode .action-buttons,
+        body.theater-mode .features-grid,
+        body.theater-mode footer {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
+    <!-- ਉੱਪਰਲੀ ਬ੍ਰਾਂਡਿੰਗ ਪੱਟੀ -->
     <header>
         <h1><span>FIFA</span> Live Match</h1>
     </header>
 
     <div class="container">
         
-        <!-- Updated Scroll Hint Bar with Poppins Font -->
+        <!-- Scroll Hint Bar -->
         <div class="scroll-hint-bar">
-            <span class="bounce-arrow">↕</span> Please scroll <span>up or down</span> to watch the match. <span class="bounce-arrow">↕</span>
+            Please scroll <span>up or down</span> to watch the match.
         </div>
 
         <!-- Live Player Box -->
         <div class="player-wrapper">
             <iframe id="matchIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
+
+        <!-- Full Screen ਬਟਨ -->
+        <button id="fullscreenToggle" class="btn-fullscreen">📺 Go Full Screen (Big Screen)</button>
 
         <!-- Match Details -->
         <div class="match-info">
@@ -253,56 +310,50 @@
             <p>Enjoy the live match seamlessly right here without any interruptions.</p>
         </div>
 
-        <!-- Action Buttons (Telegram Removed) -->
+        <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="https://api.whatsapp.com/send?text=Enjoy Live Football Matches in Premium HD Quality here! ⚽🔥 Join now: " target="_blank" id="whatsappShare" class="btn btn-whatsapp">📢 Share on WhatsApp</a>
         </div>
 
         <!-- Features Grid -->
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon">⚡</div>
-                <h3>Super Fast</h3>
-                <p>Smooth streaming with zero buffering even on low internet.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">📱</div>
-                <h3>Mobile Friendly</h3>
-                <p>Perfect layout optimized for every mobile screen size.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">📺</div>
-                <h3>HD Quality</h3>
-                <p>Premium high-definition video with crystal clear audio.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🛡️</div>
-                <h3>Safe & Clean</h3>
-                <p>Stream directly without any annoying ads or hidden pop-ups.</p>
-            </div>
+            <div class="feature-card"><h3>⚡ Super Fast</h3></div>
+            <div class="feature-card"><h3>📱 Mobile Friendly</h3></div>
+            <div class="feature-card"><h3>📺 HD Quality</h3></div>
+            <div class="feature-card"><h3>🛡️ Safe & Clean</h3></div>
         </div>
+    </div>
+
+    <!-- 🌟 ਨਵੀਂ ਹੇਠਲੀ ਬ੍ਰਾਂਡਿੰਗ ਪੱਟੀ (ਜੋ ਸਿਰਫ਼ ਫੁੱਲ ਸਕ੍ਰੀਨ 'ਤੇ ਦਿਖੇਗੀ) -->
+    <div class="theater-bottom-bar">
+        <h1><span>FIFA</span> Live Match</h1>
     </div>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 FIFA Live Match Stream. All Rights Reserved.</p>
-        <p class="disclaimer">Disclaimer: This site only embeds video streams available on the internet. We do not host any media content ourselves.</p>
     </footer>
 
     <script>
         // ==========================================
         // 🔴 CHANGE ONLY THIS LINK EVERY DAY
         // ==========================================
-        
-        const todayMatchLink = "https://fsfsdfssf.blogspot.com/p/l1.html?m=1";
-
+        const todayMatchLink = "https://i.supaimg.com/fc10e737-c79a-41e2-88b6-1218d4880316/0cf85a07-5f73-43ae-81fd-05cb56af0802.jpg";
         // ==========================================
         
-        // Setting URL inside the Iframe
         document.getElementById('matchIframe').src = todayMatchLink;
-
-        // Auto-append current website link to WhatsApp Share button
         document.getElementById('whatsappShare').href += encodeURIComponent(window.location.href);
+
+        // ਫੁੱਲ ਸਕ੍ਰੀਨ ਟੌਗਲ ਸਕ੍ਰਿਪਟ
+        const fsButton = document.getElementById('fullscreenToggle');
+        fsButton.addEventListener('click', () => {
+            document.body.classList.toggle('theater-mode');
+            if (document.body.classList.contains('theater-mode')) {
+                fsButton.innerHTML = "❌ Exit Full Screen";
+            } else {
+                fsButton.innerHTML = "📺 Go Full Screen (Big Screen)";
+            }
+        });
     </script>
 
 </body>
