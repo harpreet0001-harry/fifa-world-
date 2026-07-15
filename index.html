@@ -22,6 +22,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--dark-bg);
@@ -67,13 +71,14 @@
         .scroll-hint-bar {
             background: linear-gradient(90deg, rgba(214,175,55,0.15) 0%, rgba(214,175,55,0.02) 50%, rgba(214,175,55,0.15) 100%);
             border: 1px dashed var(--primary-gold);
-            border-radius: 6px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 12px;
             text-align: center;
             font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 12px;
             color: #fff;
+            box-shadow: 0 4px 15px rgba(214, 175, 55, 0.05);
         }
 
         .scroll-hint-bar span {
@@ -88,9 +93,9 @@
             height: 0;
             background-color: #000;
             border: 2px solid var(--primary-gold);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
             transition: all 0.3s ease;
         }
 
@@ -112,13 +117,20 @@
             border: 2px solid var(--primary-gold);
             color: #fff;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 10px;
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
             width: 100%;
             margin: 15px 0;
-            box-shadow: 0 4px 10px rgba(214, 175, 55, 0.1);
+            box-shadow: 0 4px 15px rgba(214, 175, 55, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .btn-fullscreen:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(214, 175, 55, 0.25);
+            background: linear-gradient(135deg, #333 0%, #444 100%);
         }
 
         /* Match Info & Buttons */
@@ -126,9 +138,15 @@
             margin-top: 15px;
             background-color: var(--surface-bg);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             text-align: center;
             border-left: 4px solid var(--primary-gold);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .match-info:hover {
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.08);
         }
 
         .match-info h2 {
@@ -141,11 +159,28 @@
             display: inline-block;
             background-color: #e50914;
             color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
+            padding: 3px 12px;
+            border-radius: 6px;
             font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 10px;
+            box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 8px rgba(229, 9, 20, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(229, 9, 20, 0);
+            }
         }
 
         .action-buttons {
@@ -157,16 +192,24 @@
             align-items: center;
             justify-content: center;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 10px;
             text-decoration: none;
             color: #fff;
             font-weight: bold;
             font-size: 0.95rem;
             width: 100%;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .btn-whatsapp {
             background-color: var(--whatsapp-green);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            filter: brightness(1.1);
         }
 
         .features-grid {
@@ -180,8 +223,15 @@
             background-color: var(--surface-bg);
             border: 1px solid #333;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
             text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
         }
 
         .feature-card h3 {
@@ -196,6 +246,54 @@
             text-align: center;
             font-size: 0.8rem;
             color: var(--text-dim);
+        }
+
+        /* Scroll Animation Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--surface-bg);
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-gold);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* 👑 VIP THEATER MODE: ਜਦੋਂ ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ ਦਬਾਇਆ ਜਾਵੇਗਾ */
@@ -276,6 +374,9 @@
         body.theater-mode .match-info,
         body.theater-mode .action-buttons,
         body.theater-mode .features-grid,
+        body.theater-mode .match-gallery-section,
+        body.theater-mode .privacy-section,
+        body.theater-mode #backToTop,
         body.theater-mode footer {
             display: none !important;
         }
@@ -291,32 +392,138 @@
     <div class="container">
         
         <!-- Scroll Hint Bar -->
-        <div class="scroll-hint-bar">
+        <div class="scroll-hint-bar reveal">
             Please scroll <span>up or down</span> to watch the match.
         </div>
 
         <!-- Live Player Box -->
-        <div class="player-wrapper">
+        <div class="player-wrapper reveal">
             <iframe id="matchIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
         <!-- Full Screen ਬਟਨ -->
-        <button id="fullscreenToggle" class="btn-fullscreen">📺 Go Full Screen (Big Screen)</button>
+        <button id="fullscreenToggle" class="btn-fullscreen reveal">📺 Go Full Screen (Big Screen)</button>
+
+        <!-- Custom Added Styles for Gallery & Privacy Policy -->
+        <style>
+            .match-gallery-section {
+                margin: 20px 0;
+                background-color: var(--surface-bg);
+                padding: 20px;
+                border-radius: 12px;
+                border-left: 4px solid var(--primary-gold);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+            }
+            .match-gallery-section:hover {
+                box-shadow: 0 8px 25px rgba(212, 175, 55, 0.08);
+            }
+            .gallery-title {
+                font-size: 1.2rem;
+                color: var(--primary-gold);
+                margin-bottom: 15px;
+                font-weight: 600;
+            }
+            .gallery-carousel {
+                display: flex;
+                overflow-x: auto;
+                gap: 15px;
+                padding-bottom: 10px;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+            .gallery-carousel::-webkit-scrollbar {
+                height: 6px;
+            }
+            .gallery-carousel::-webkit-scrollbar-track {
+                background: #111;
+                border-radius: 3px;
+            }
+            .gallery-carousel::-webkit-scrollbar-thumb {
+                background: var(--primary-gold);
+                border-radius: 3px;
+            }
+            .gallery-carousel .gallery-item {
+                flex: 0 0 auto;
+                display: inline-block;
+                border: 1px solid #333;
+                border-radius: 10px;
+                overflow: hidden;
+                pointer-events: none; /* Disables any click or full screen interaction on the image */
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+            .gallery-carousel .gallery-item:hover {
+                border-color: var(--primary-gold);
+                box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+            }
+            .gallery-carousel img {
+                display: block;
+                max-height: 180px;
+                height: auto;
+                width: auto;
+                object-fit: contain;
+                max-width: 100%;
+            }
+            .privacy-section {
+                margin: 20px 0;
+                background-color: var(--surface-bg);
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid #333;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+            .privacy-section:hover {
+                border-color: rgba(212, 175, 55, 0.3);
+                box-shadow: 0 8px 25px rgba(212, 175, 55, 0.05);
+            }
+            .privacy-section h3 {
+                font-size: 1.1rem;
+                color: var(--primary-gold);
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            .privacy-section p {
+                font-size: 0.85rem;
+                color: var(--text-dim);
+                line-height: 1.5;
+            }
+            body.theater-mode .match-gallery-section,
+            body.theater-mode .privacy-section {
+                display: none !important;
+            }
+        </style>
+
+        <!-- 📸 Match Gallery Section -->
+        <div class="match-gallery-section reveal">
+            <h2 class="gallery-title">📸 Match Gallery</h2>
+            <div class="gallery-carousel">
+                <div class="gallery-item">
+                    <img src="https://i.supaimg.com/fc10e737-c79a-41e2-88b6-1218d4880316/b6040600-83cd-4371-84a7-73af57b26658.jpg" alt="Match Image" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer Section -->
+        <div class="privacy-section reveal">
+            <h3>Disclaimer</h3>
+            <p>This website only embeds publicly available third-party content inside an iframe. We do not host, upload, or store any streaming content or media files on our servers. All rights and content belong to their respective original owners.</p>
+        </div>
 
         <!-- Match Details -->
-        <div class="match-info">
+        <div class="match-info reveal">
             <span class="live-badge">🔴 LIVE</span>
             <h2>Today's Big Clash</h2>
             <p>Enjoy the live match seamlessly right here without any interruptions.</p>
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons">
+        <div class="action-buttons reveal">
             <a href="https://api.whatsapp.com/send?text=Enjoy Live Football Matches in Premium HD Quality here! ⚽🔥 Join now: " target="_blank" id="whatsappShare" class="btn btn-whatsapp">📢 Share on WhatsApp</a>
         </div>
 
         <!-- Features Grid -->
-        <div class="features-grid">
+        <div class="features-grid reveal">
             <div class="feature-card"><h3>⚡ Super Fast</h3></div>
             <div class="feature-card"><h3>📱 Mobile Friendly</h3></div>
             <div class="feature-card"><h3>📺 HD Quality</h3></div>
@@ -329,6 +536,9 @@
         <h1><span>FIFA</span> Live Match</h1>
     </div>
 
+    <!-- Floating Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to Top">↑</button>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 FIFA Live Match Stream. All Rights Reserved.</p>
@@ -338,7 +548,7 @@
         // ==========================================
         // 🔴 CHANGE ONLY THIS LINK EVERY DAY
         // ==========================================
-        const todayMatchLink = "https://www.epic-sports.info/2026/07/england-vs-argentina-match-info-preview.html?m=1#";
+        const todayMatchLink = "https://worldcup.epicsports.online/2026/07/england-argentina.html?m=1";
         // ==========================================
         
         document.getElementById('matchIframe').src = todayMatchLink;
@@ -354,7 +564,46 @@
                 fsButton.innerHTML = "📺 Go Full Screen (Big Screen)";
             }
         });
+
+        // Scroll Animation (Fade-in on scroll)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            reveals.forEach(element => {
+                revealOnScroll.observe(element);
+            });
+        });
+
+        // Floating Back to Top Button Interaction
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 
 </body>
-</html>
+    </html>
+    
